@@ -23,56 +23,72 @@ class Tree{
         return array;
     }
 
+    travelRec(value, root = this.root, last = this.root){
+        //if the root node is empty return null
+        if(root === null){ 
+            return null;
+        } else if(root.data === value){ //return the same value root
+            return {root, last};                            
+        } else if(value < root.data && root.left === null){
+            return root;
+        } else if(value > root.data && root.right === null){
+            return root;
+        }
+
+        if(value < root.data) return this.travelRec(value, root.left, root);
+        if(value > root.data) return this.travelRec(value, root.right, root);
+    }
+
     insert(value){
-        let node = new Node(value);
-        let currentNode = this.root;
-        let placed = false;
+        let root = this.travelRec(value);
+        //if the root is null create the node
+        if(root === null) return this.root = new Node(value);
 
-        while(!placed){
+        //if tha val is equal to a existing node return null
+        if(root.data === value) return null;
 
-            //check and add the value
-            if(currentNode.data > node.data && currentNode.left === null){
-                currentNode.left = node;
-                placed = true;
-            } else if(currentNode.data < node.data && currentNode.right === null){
-                currentNode.right = node;
-                placed = true;
-            }
-
-            //check and travel between nodes
-            if(currentNode.data > node.data && currentNode.left != null){
-                currentNode = currentNode.left;
-            } else if(currentNode.data < node.data && currentNode.right != null){
-                currentNode = currentNode.right
-            }
-
-            //if the new node is equal do not add
-            if(currentNode.data === node.data) placed = true;
+        if(value < root.data){
+            return root.left = new Node(value);
+        } else{
+            return root.right = new Node(value);
         }
     }
 
-    delete(value){
-        let currentNode = this.root;
-        let placed = false;
-        
-        while(!placed){
-            //travel to find the value
-            if(currentNode.data != value && currentNode.data > value && currentNode.left != null){
-                currentNode = currentNode.left;
-            } else if(currentNode.data != value && currentNode.data < value && currentNode.right != null){
-                currentNode = currentNode.right;
-            }
+    minValue(node) {
+        let minv = node.data;
+        while (node.left !== null) {
+            minv = node.left.data;
+            node = node.left;
+        }
+        return minv;
+    }
 
-            //if the new node is equal stop
-            if(currentNode.data === value) placed = true;
+    delete(value, node = this.root, las){
+        let root = this.travelRec(value, node, las);
+        let last = root.last;
+        root = root.root;
 
-            //return null if the value was not found
-            if(currentNode.data > value && currentNode.left === null) return null;
-            if(currentNode.data < value && currentNode.right === null) return null;
+        //if value was not found return null
+        if(root === undefined) return null;
+
+        //if the value has both childs
+        if(root.left != null && root.right != null){
+            let data = this.minValue(root.right);
+            root.data = data;
+            return this.delete(data, root.right, root);
         }
 
+        //if the node is a leave just delete
+        if(root.left === null && root.right === null){
+            return last.data > root.data ? last.left = null : last.right = null;
+        } 
 
-        
+        //if only has one children
+        if(root.left != null){
+            return last.left = root.left;
+        } else if(root.right != null){
+            return last.right = root.right;
+        }
     }
 }
 
@@ -88,9 +104,16 @@ function buildTree(arr, start, end){
     return root;
 }
 
-let BST = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-BST.insert(15);
-BST.insert(3);
+let BST = new Tree([1, 2, 3, 5, 7, 8, 9]);
+console.log('---- Insertions -----');
 BST.insert(10);
+BST.insert(3);
+BST.insert(4);
+BST.insert(6);
+prettyPrint(BST.root);
 
+console.log('');
+console.log('---- Deletions -----');
+BST.delete(8);
+BST.delete(2);
 prettyPrint(BST.root);
