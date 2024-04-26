@@ -23,6 +23,7 @@ class Tree{
         return array;
     }
 
+    //travel around the tree and find the value
     travelRec(value, root = this.root, last = this.root){
         //if the root node is empty return null
         if(root === null){ 
@@ -90,6 +91,12 @@ class Tree{
             return last.right = root.right;
         }
     }
+
+    find(value){
+        let node = this.travelRec(value);
+        if(node.root === undefined) return null;
+        return node.root;
+    }
 }
 
 function buildTree(arr, start, end){
@@ -117,3 +124,8 @@ console.log('---- Deletions -----');
 BST.delete(8);
 BST.delete(2);
 prettyPrint(BST.root);
+
+console.log('');
+console.log('---- Find -----');
+console.log(BST.find(7));
+console.log(BST.find(33));
