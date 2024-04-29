@@ -97,6 +97,23 @@ class Tree{
         if(node.root === undefined) return null;
         return node.root;
     }
+
+    levelOrder(root = this.root){
+        if(root === null) return null;
+        let queue = [];
+        queue.push(root);
+        let levelOrderValues = '';
+
+        while(queue.length != 0){
+            let currentNode = queue[0];
+            levelOrderValues += ` ${currentNode.data}`;
+
+            if(currentNode.left != null) queue.push(currentNode.left);
+            if(currentNode.right != null) queue.push(currentNode.right);
+            queue.shift();
+        }
+        return levelOrderValues;
+    }
 }
 
 function buildTree(arr, start, end){
@@ -129,3 +146,9 @@ console.log('');
 console.log('---- Find -----');
 console.log(BST.find(7));
 console.log(BST.find(33));
+
+console.log('');
+console.log('----- LevelOrder -----');
+console.log(BST.levelOrder());
+console.log(BST.levelOrder(BST.find(9)));
+
