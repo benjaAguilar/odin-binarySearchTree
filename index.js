@@ -96,6 +96,7 @@ export class Tree{
         return node.root;
     }
 
+    //iterates over the tree in level order breadth first
     levelOrder(root = this.root){
         if(root === null) return null;
         let queue = [];
@@ -103,22 +104,29 @@ export class Tree{
         let levelOrderValues = '';
 
         while(queue.length != 0){
+            //get the current element in the queue
             let currentNode = queue[0];
             levelOrderValues += ` ${currentNode.data}`;
 
+            //queue the elements
             if(currentNode.left != null) queue.push(currentNode.left);
             if(currentNode.right != null) queue.push(currentNode.right);
+            //unqueue the first element
             queue.shift();
         }
         return levelOrderValues;
     }
 
+    //iterates over tree element inOrder, preOrder, postOrder (depth first)
     inOrder(root = this.root){
         let string = '';
+        //if the current node is a leaf return the data
         if(root.right === null && root.left === null) return string += ` ${root.data}`;
 
+        //travel to the left
         if(root.left != null) string += this.inOrder(root.left);
-        string += ` ${root.data}`;
+        string += ` ${root.data}`; //read the data
+        //travel to right
         if(root.right != null) string += this.inOrder(root.right);
         return string;
     }
