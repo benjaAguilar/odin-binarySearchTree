@@ -1,5 +1,3 @@
-import { prettyPrint } from "./prettyPrint.js";
-
 class Node{
     constructor(data){
         this.data = data,
@@ -8,7 +6,7 @@ class Node{
     }
 }
 
-class Tree{
+export class Tree{
     constructor (arr){
         this.sortedArr = this.order(arr);
         this.root = buildTree(this.sortedArr, 0, this.sortedArr.length - 1);
@@ -114,6 +112,16 @@ class Tree{
         }
         return levelOrderValues;
     }
+
+    inOrder(root = this.root){
+        let string = '';
+        if(root.right === null && root.left === null) return string += ` ${root.data}`;
+
+        if(root.left != null) string += this.inOrder(root.left);
+        string += ` ${root.data}`;
+        if(root.right != null) string += this.inOrder(root.right);
+        return string;
+    }
 }
 
 function buildTree(arr, start, end){
@@ -128,27 +136,5 @@ function buildTree(arr, start, end){
     return root;
 }
 
-let BST = new Tree([1, 2, 3, 5, 7, 8, 9]);
-console.log('---- Insertions -----');
-BST.insert(10);
-BST.insert(3);
-BST.insert(4);
-BST.insert(6);
-prettyPrint(BST.root);
 
-console.log('');
-console.log('---- Deletions -----');
-BST.delete(8);
-BST.delete(2);
-prettyPrint(BST.root);
-
-console.log('');
-console.log('---- Find -----');
-console.log(BST.find(7));
-console.log(BST.find(33));
-
-console.log('');
-console.log('----- LevelOrder -----');
-console.log(BST.levelOrder());
-console.log(BST.levelOrder(BST.find(9)));
 
