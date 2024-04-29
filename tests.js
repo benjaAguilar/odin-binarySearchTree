@@ -28,3 +28,14 @@ console.log(BST.levelOrder(BST.find(9)));
 console.log('');
 console.log('----- inOrder -----');
 console.log(BST.inOrder());
+console.log(BST.inOrder(BST.find(9)));
+
+console.log('');
+console.log('----- preOrder -----');
+console.log(BST.preOrder());
+console.log(BST.preOrder(BST.find(9)));
+
+console.log('');
+console.log('----- postOrder -----');
+console.log(BST.postOrder());
+console.log(BST.postOrder(BST.find(9)));

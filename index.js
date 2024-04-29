@@ -122,6 +122,26 @@ export class Tree{
         if(root.right != null) string += this.inOrder(root.right);
         return string;
     }
+
+    preOrder(root = this.root){
+        let string = '';
+        if(root.right === null && root.left === null) return string += ` ${root.data}`;
+
+        string += ` ${root.data}`;
+        if(root.left != null) string += this.preOrder(root.left);
+        if(root.right != null) string += this.preOrder(root.right);
+        return string;
+    }
+
+    postOrder(root = this.root){
+        let string = '';
+        if(root.right === null && root.left === null) return string += ` ${root.data}`;
+
+        if(root.left != null) string += this.postOrder(root.left);
+        if(root.right != null) string += this.postOrder(root.right);
+        string += ` ${root.data}`;
+        return string;
+    }
 }
 
 function buildTree(arr, start, end){
