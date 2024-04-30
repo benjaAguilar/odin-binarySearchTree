@@ -150,7 +150,20 @@ export class Tree{
         string += ` ${root.data}`;
         return string;
     }
+
+    height(root = this.root){
+        //if root = null  return 0
+        if(root === null) return 0;
+
+        //recursive call for each node
+        let leftH = this.height(root.left);
+        let rightH = this.height(root.right);
+
+        //return the max + the root node
+        return Math.max(leftH, rightH) + 1;
+    }
 }
+
 
 function buildTree(arr, start, end){
 

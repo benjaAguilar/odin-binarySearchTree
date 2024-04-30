@@ -39,3 +39,7 @@ console.log('');
 console.log('----- postOrder -----');
 console.log(BST.postOrder());
 console.log(BST.postOrder(BST.find(9)));
+
+console.log('');
+console.log('----- Height -----');
+console.log(BST.height());
