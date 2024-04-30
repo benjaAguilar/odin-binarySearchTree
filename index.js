@@ -162,6 +162,15 @@ export class Tree{
         //return the max + the root node
         return Math.max(leftH, rightH) + 1;
     }
+
+    depth(root = this.root, current = this.root){
+        //if the given root is equal to current return depth 1  
+        if(root === current) return 1;
+
+        //travel to find the node and plus the depth
+        if(current.data > root.data) return 1 + this.depth(root, current.left);
+        if(current.data < root.data) return 1 + this.depth(root, current.right);        
+    }
 }
 
 

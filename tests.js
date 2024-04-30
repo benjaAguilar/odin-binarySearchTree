@@ -43,3 +43,7 @@ console.log(BST.postOrder(BST.find(9)));
 console.log('');
 console.log('----- Height -----');
 console.log(BST.height());
+
+console.log('');
+console.log('----- Depth -----');
+console.log(BST.depth(BST.find(9)));
