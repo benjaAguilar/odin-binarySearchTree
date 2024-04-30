@@ -47,3 +47,7 @@ console.log(BST.height());
 console.log('');
 console.log('----- Depth -----');
 console.log(BST.depth(BST.find(9)));
+
+console.log('');
+console.log('----- IsBalanced -----');
+console.log(BST.isBalanced());

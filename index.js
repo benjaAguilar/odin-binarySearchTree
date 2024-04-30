@@ -101,12 +101,12 @@ export class Tree{
         if(root === null) return null;
         let queue = [];
         queue.push(root);
-        let levelOrderValues = '';
+        let levelOrderValues = [];
 
         while(queue.length != 0){
             //get the current element in the queue
             let currentNode = queue[0];
-            levelOrderValues += ` ${currentNode.data}`;
+            levelOrderValues.push(currentNode.data);
 
             //queue the elements
             if(currentNode.left != null) queue.push(currentNode.left);
@@ -164,6 +164,7 @@ export class Tree{
     }
 
     depth(root = this.root, current = this.root){
+        if(root === null) return null;
         //if the given root is equal to current return depth 1  
         if(root === current) return 1;
 
@@ -171,8 +172,25 @@ export class Tree{
         if(current.data > root.data) return 1 + this.depth(root, current.left);
         if(current.data < root.data) return 1 + this.depth(root, current.right);        
     }
-}
 
+    isBalanced(root = this.root){
+        if(root === null) return null;
+
+        let leftRootHeight = this.height(root.left);
+        let rightRootHeight = this.height(root.right); 
+        
+        if(Math.abs(rightRootHeight - leftRootHeight) <= 1){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    rebalance(){
+        let unbalancedTree = this.levelOrder();
+        return new Tree(unbalancedTree);
+    }
+}
 
 function buildTree(arr, start, end){
 
